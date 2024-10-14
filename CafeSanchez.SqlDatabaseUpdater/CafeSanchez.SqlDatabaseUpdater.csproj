@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="scripts\create-database.sql" />
+    <None Remove="scripts\insert-master-data.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="scripts\create-database.sql" />
+    <EmbeddedResource Include="scripts\insert-master-data.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="dbup-sqlserver" Version="5.0.41" />
+  </ItemGroup>
+
+</Project>
