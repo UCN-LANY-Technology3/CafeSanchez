@@ -1,0 +1,2 @@
+﻿ALTER TABLE Products
+	ADD Version ROWVERSION NOT NULL
