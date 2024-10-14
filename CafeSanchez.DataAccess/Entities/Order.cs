@@ -8,6 +8,7 @@ namespace CafeSanchez.DataAccess.Entities;
 
 public class Order
 {
+    public int Id { get; set; }
     public required string CustomerName { get; set; }
     public DateTime Date { get; set; }
     public decimal Discount { get; set; }
