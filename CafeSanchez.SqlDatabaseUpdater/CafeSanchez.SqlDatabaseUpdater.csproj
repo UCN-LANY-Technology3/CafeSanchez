@@ -8,15 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="scripts\add-rowversion.sql" />
-    <None Remove="scripts\create-database.sql" />
-    <None Remove="scripts\insert-master-data.sql" />
+    <None Remove="scripts\1-create-database.sql" />
+    <None Remove="scripts\2-insert-master-data.sql" />
+    <None Remove="scripts\3-add-rowversion.sql" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="scripts\add-rowversion.sql" />
-    <EmbeddedResource Include="scripts\create-database.sql" />
-    <EmbeddedResource Include="scripts\insert-master-data.sql" />
+    <EmbeddedResource Include="scripts\3-add-rowversion.sql" />
+    <EmbeddedResource Include="scripts\1-create-database.sql" />
+    <EmbeddedResource Include="scripts\2-insert-master-data.sql" />
   </ItemGroup>
 
   <ItemGroup>
