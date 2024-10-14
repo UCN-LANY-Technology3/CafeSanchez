@@ -1,20 +1,19 @@
 using CafeSanchez.DataAccess.Entities;
 
-namespace CafeSanchez.DataAccessTests
+namespace CafeSanchez.DataAccessTests;
+
+public class OrderTests
 {
-    public class OrderTests
+    [SetUp]
+    public void Setup()
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
+    }
 
-        [Test]
-        public void InstantiateOrderTest()
-        {
-            Order test = new Order() { CustomerName = "Hans"};
+    [Test]
+    public void InstantiateOrderTest()
+    {
+        Order test = new Order() { CustomerName = "Hans"};
 
-            Assert.That(test, Is.Not.Null);
-        }
+        Assert.That(test, Is.Not.Null);
     }
 }

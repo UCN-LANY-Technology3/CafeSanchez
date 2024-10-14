@@ -5,28 +5,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CafeSanchez.DataAccess.DAO
+namespace CafeSanchez.DataAccess.DAO;
+
+internal class OrderDao : IDao<Order>
 {
-    internal class OrderDao : IDao<Order>
+    public Order Create(Order entity)
     {
-        public Order Create(Order entity)
-        {
-            throw new NotImplementedException();
-        }
+        throw new NotImplementedException();
+    }
 
-        public IEnumerable<Order> Read()
-        {
-            throw new NotImplementedException();
-        }
+    public IEnumerable<Order> Read()
+    {
+        throw new NotImplementedException();
+    }
 
-        public Order Update(Order entity)
-        {
-            throw new NotImplementedException();
-        }
+    public Order Update(Order entity)
+    {
+        throw new NotImplementedException();
+    }
 
-        public bool Delete(Order entity)
-        {
-            throw new NotImplementedException();
-        }
+    public bool Delete(Order entity)
+    {
+        throw new NotImplementedException();
     }
 }
