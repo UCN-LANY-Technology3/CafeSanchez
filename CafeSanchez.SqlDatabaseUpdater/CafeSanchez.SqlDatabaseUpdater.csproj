@@ -8,11 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="scripts\add-rowversion.sql" />
     <None Remove="scripts\create-database.sql" />
     <None Remove="scripts\insert-master-data.sql" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="scripts\add-rowversion.sql" />
     <EmbeddedResource Include="scripts\create-database.sql" />
     <EmbeddedResource Include="scripts\insert-master-data.sql" />
   </ItemGroup>
