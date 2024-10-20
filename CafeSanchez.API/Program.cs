@@ -10,9 +10,11 @@ namespace CafeSanchez.API
     {
         public static void Main(string[] args)
         {
-            string connectionString = "Server=192.168.56.101; Database=CafeSanchez; User Id=sa; Password=P@$$w0rd; TrustServerCertificate=True";
+            //"Server=localhost; Database=CafeSanchez; User Id=sa; Password=1StrongPassword!; TrustServerCertificate=True";
 
             var builder = WebApplication.CreateBuilder(args);
+
+            string connectionString = builder.Configuration.GetConnectionString("Default") ?? throw new Exception("Connectionstring not found");
 
             // Add services to the container.
             builder.Services.AddScoped(_ => DaoFactory.Create<IProductDao>(connectionString));

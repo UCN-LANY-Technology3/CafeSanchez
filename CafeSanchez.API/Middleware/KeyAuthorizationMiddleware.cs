@@ -29,7 +29,6 @@ internal class KeyAuthorizationMiddleware(RequestDelegate next)
         // Last, check if the provided key is allowed
         if (!authorizedKeys.Any(k => k.Equals(providedAuthorizationKey, StringComparison.InvariantCultureIgnoreCase)))
         {
-
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
             await context.Response.WriteAsync("Invalid authorization key");
             return;
