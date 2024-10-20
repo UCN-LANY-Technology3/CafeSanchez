@@ -10,8 +10,6 @@ namespace CafeSanchez.API
     {
         public static void Main(string[] args)
         {
-            //"Server=localhost; Database=CafeSanchez; User Id=sa; Password=1StrongPassword!; TrustServerCertificate=True";
-
             var builder = WebApplication.CreateBuilder(args);
 
             string connectionString = builder.Configuration.GetConnectionString("Default") ?? throw new Exception("Connectionstring not found");
