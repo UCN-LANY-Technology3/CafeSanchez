@@ -7,11 +7,12 @@ namespace CafeSanchez.DataAccessTests;
 public class OrderTests
 {
     private IDao<Order> _orderDao;
+    private readonly string _connectionString = "Server=localhost; Database=CafeSanchez; User Id=sa; Password=1StrongPassword!; TrustServerCertificate=True";
 
     [SetUp]
     public void Setup()
     {
-        _orderDao = new OrderDao("Server=192.168.56.101; Database=CafeSanchez; User Id=sa; Password=P@$$w0rd; TrustServerCertificate=True");
+        _orderDao = DaoFactory.Create<IOrderDao>(_connectionString);
     }
 
     [Test]

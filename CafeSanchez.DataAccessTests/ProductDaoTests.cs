@@ -11,7 +11,7 @@ namespace CafeSanchez.DataAccessTests
 {
     public class ProductDaoTests
     {
-        private readonly string _connectionString = "Server=192.168.56.101; Database=CafeSanchez; User Id=sa; Password=P@$$w0rd; TrustServerCertificate=True";
+        private readonly string _connectionString = "Server=localhost; Database=CafeSanchez; User Id=sa; Password=1StrongPassword!; TrustServerCertificate=True";
 
         private IProductDao _productDao;
 
