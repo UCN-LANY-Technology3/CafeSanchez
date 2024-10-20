@@ -14,6 +14,7 @@ namespace CafeSanchez.DataAccess
             return typeof(TDao) switch
             {
                 var dao when dao == typeof(IProductDao) => new ProductDao(connectionString) as TDao,
+                var dao when dao == typeof(IOrderDao) => new OrderDao(connectionString) as TDao,
                 _ => throw new DaoException("Unknown DAO")
             } ?? throw new DaoException($"A problem occurred creating a DAO for {nameof(TDao)}");
         }

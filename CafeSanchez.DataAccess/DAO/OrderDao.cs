@@ -1,16 +1,11 @@
 ﻿using CafeSanchez.DataAccess.Entities;
 using Dapper;
-using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CafeSanchez.DataAccess.DAO;
 
-public class OrderDao(string connectionString) : IDao<Order>
+internal class OrderDao(string connectionString) : IOrderDao
 {
     private readonly string _connectionString = connectionString;
 
