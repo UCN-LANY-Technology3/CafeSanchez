@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace CafeSanchez.DataAccess.DAO;
-public class ProductDao(string connectionString) : IProductDao
+internal class ProductDao(string connectionString) : IProductDao
 {
     private string _connectionString = connectionString;
 
@@ -20,30 +20,11 @@ public class ProductDao(string connectionString) : IProductDao
 
     public IEnumerable<Product> Read()
     {
-        string selectSql = "SELECT Name, Description, Price FROM Products";
+        string selectSql = "SELECT Id, Name, Description, Price FROM Products";
 
         IDbConnection connection = new SqlConnection(_connectionString);
 
         return connection.Query<Product>(selectSql);
-
-        // Using ADO
-        //SqlCommand selectCommand = new(selectSql, connection);
-
-        //connection.Open();
-
-        //SqlDataReader reader = selectCommand.ExecuteReader();
-        //while (reader.Read())
-        //{
-        //    yield return new Product()
-        //    {
-        //        Name = reader.GetString("Name"),
-        //        Description = reader.GetString("Description"),
-        //        Price = reader.GetDecimal("Price")
-        //    };
-        //}
-
-
-
     }
 
     public Product Update(Product entity)
@@ -56,7 +37,7 @@ public class ProductDao(string connectionString) : IProductDao
         throw new NotImplementedException();
     }
 
-    public Product ReadByName(string name)
+    public Product FindByName(string name)
     {
         string selectSql = "SELECT Name, Description, Price FROM Products WHERE Name = @Name";
 

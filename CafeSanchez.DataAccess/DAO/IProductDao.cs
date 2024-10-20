@@ -9,6 +9,6 @@ namespace CafeSanchez.DataAccess.DAO
 {
     public interface IProductDao : IDao<Product>
     {
-        Product ReadByName(string name);
+        Product FindByName(string name);
     }
 }

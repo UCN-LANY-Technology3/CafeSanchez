@@ -1,6 +1,8 @@
-@CafeSanchez.API_HostAddress = http://localhost:5148
+@CafeSanchez.API_HostAddress = http://localhost:5148/api
+@Client_Authorization_Key = E888F6C3-7720-4938-A6C5-B79C126D1FA3
 
-GET {{CafeSanchez.API_HostAddress}}/weatherforecast/
+GET {{CafeSanchez.API_HostAddress}}/products
+Client-Authorization-Key: {{Client_Authorization_Key}}
 Accept: application/json
 
 ###

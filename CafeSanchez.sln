@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CafeSanchez.API", "CafeSanc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CafeSanchez.POS", "CafeSanchez.POS\CafeSanchez.POS.csproj", "{FA428CF0-58C8-4C60-A1C4-2F3D6C1DE4AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CafeSanchez.SqlDatabaseUpdater", "CafeSanchez.SqlDatabaseUpdater\CafeSanchez.SqlDatabaseUpdater.csproj", "{CF1EFF5E-E230-4C0B-9C9A-622412717B86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CafeSanchez.SqlDatabaseUpdater", "CafeSanchez.SqlDatabaseUpdater\CafeSanchez.SqlDatabaseUpdater.csproj", "{CF1EFF5E-E230-4C0B-9C9A-622412717B86}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

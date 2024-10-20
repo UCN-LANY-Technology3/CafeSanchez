@@ -1,4 +1,5 @@
-﻿using CafeSanchez.DataAccess.DAO;
+﻿using CafeSanchez.DataAccess;
+using CafeSanchez.DataAccess.DAO;
 using CafeSanchez.DataAccess.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,12 +11,14 @@ namespace CafeSanchez.DataAccessTests
 {
     public class ProductDaoTests
     {
-        ProductDao _productDao;
+        private readonly string _connectionString = "Server=192.168.56.101; Database=CafeSanchez; User Id=sa; Password=P@$$w0rd; TrustServerCertificate=True";
+
+        private IProductDao _productDao;
 
         [SetUp]
         public void SetUp()
         {
-            _productDao = new ProductDao("Server=192.168.56.101; Database=CafeSanchez; User Id=sa; Password=P@$$w0rd; TrustServerCertificate=True");
+            _productDao = DaoFactory.Create<IProductDao>(_connectionString);
         }
 
         [Test]
@@ -40,7 +43,7 @@ namespace CafeSanchez.DataAccessTests
         [Test]
         public void ReadSingleProductSuccessfullyTest()
         {
-            Product product = _productDao.ReadByName("Cappuccino");
+            Product product = _productDao.FindByName("Cappuccino");
 
             Assert.That(product, Is.Not.Null);
         }
