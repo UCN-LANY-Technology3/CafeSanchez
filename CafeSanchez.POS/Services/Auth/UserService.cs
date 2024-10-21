@@ -8,11 +8,11 @@ namespace CafeSanchez.POS.Services.Auth
     {
         private readonly string _connectionString = connectionString;
 
-        public bool ValidateLogin(string username, string password)
+        public bool ValidateLogin(string username, string password, out User? user)
         {
             IDbConnection conn = new SqlConnection(_connectionString);
 
-            var user = conn.QuerySingleOrDefault("SELECT * FROM Users WHERE Username = @username AND Password = @password", new { username, password });
+            user = conn.QuerySingleOrDefault<User>("SELECT Fullname, Email FROM Users WHERE Username = @username AND Password = @password", new { username, password });
 
             return user != null;
         }

@@ -29,12 +29,16 @@ namespace CafeSanchez.POS.Controllers
         public async Task<IActionResult> Login(LoginModel login)
         {
             // Validate login and create authorization cookie
-            if (_userService.ValidateLogin(login.Username, login.Password)) 
+            if (_userService.ValidateLogin(login.Username, login.Password, out User? user)) 
             {
+                if (user == null) {
+                    return RedirectToAction("Index");
+                }
                 var claims = new List<Claim>
                 {
                     new(ClaimTypes.Name, login.Username),
-                    new(ClaimTypes.Role, "Administrator"),
+                    new("Fullname", user.Fullname),
+                    new(ClaimTypes.Email, user.Email),
                 };
 
                 var claimsIdentity = new ClaimsIdentity(
@@ -44,7 +48,7 @@ namespace CafeSanchez.POS.Controllers
                     CookieAuthenticationDefaults.AuthenticationScheme,
                     new ClaimsPrincipal(claimsIdentity));
 
-                return RedirectToAction("Pos");
+                return View("Pos", new UserModel { Fullname = user.Fullname, Email = user.Email });
             }
 
             return RedirectToAction("Index");

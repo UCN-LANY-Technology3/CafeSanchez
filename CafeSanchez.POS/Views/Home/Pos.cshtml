@@ -1,11 +1,12 @@
-﻿@{
+﻿@model UserModel
+@{
     ViewData["Title"] = "Cafe Sanchéz - POS";
 }
 
 <h1>Cafe Sanchéz</h1>
 <hr />
 <form method="post" asp-controller="Home" asp-action="Logout">
-    <button class="btn btn-primary" type="submit">Sign out</button>
+    <button class="btn btn-primary" type="submit">Sign out @Model.Fullname</button>
 </form>
 <div class="row">
     <div class="col">
