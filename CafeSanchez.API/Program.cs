@@ -2,7 +2,6 @@
 using CafeSanchez.API.Middleware;
 using CafeSanchez.DataAccess;
 using CafeSanchez.DataAccess.DAO;
-using CafeSanchez.DataAccess.Entities;
 
 namespace CafeSanchez.API
 {
