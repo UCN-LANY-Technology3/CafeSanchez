@@ -1,3 +1,4 @@
+using CafeSanchez.POS.Services.Auth;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace CafeSanchez.POS
@@ -8,12 +9,14 @@ namespace CafeSanchez.POS
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            string userDataConnectionString = builder.Configuration.GetConnectionString("UserData") ?? throw new Exception("No connectionstring for authentication service");
+
             // Add services to the container.
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
             {
-                options.LoginPath = "/";
-                
+                options.LoginPath = "/";         
             });
+            builder.Services.AddScoped<UserService>(_ => new UserService(userDataConnectionString));
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();

@@ -1,4 +1,5 @@
 using CafeSanchez.POS.Models;
+using CafeSanchez.POS.Services.Auth;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -11,10 +12,12 @@ namespace CafeSanchez.POS.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly UserService _userService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, UserService userService)
         {
             _logger = logger;
+            _userService = userService;
         }
 
         public IActionResult Index()
@@ -25,9 +28,8 @@ namespace CafeSanchez.POS.Controllers
         [HttpPost("/")]
         public async Task<IActionResult> Login(LoginModel login)
         {
-
             // Validate login and create authorization cookie
-            if (login != null && login.Username == "qwer" && login.Password == "asdf")
+            if (_userService.ValidateLogin(login.Username, login.Password)) 
             {
                 var claims = new List<Claim>
                 {
