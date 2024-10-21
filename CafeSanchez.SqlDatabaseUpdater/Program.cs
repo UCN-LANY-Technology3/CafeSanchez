@@ -9,7 +9,7 @@ namespace CafeSanchez.SqlDatabaseUpdater
         {
             Console.WriteLine("Hello, World!");
 
-            var connectionString = args.FirstOrDefault() ?? "Server=192.168.56.101; Database=CafeSanchez; User Id=sa; Password=P@$$w0rd; TrustServerCertificate=True";
+            var connectionString = args.FirstOrDefault() ?? "Server=localhost; Database=CafeSanchez; User Id=sa; Password=1StrongPassword!; TrustServerCertificate=True";
 
             EnsureDatabase.For.SqlDatabase(connectionString);
 

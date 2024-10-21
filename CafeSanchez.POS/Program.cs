@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+
 namespace CafeSanchez.POS
 {
     public class Program
@@ -7,6 +9,11 @@ namespace CafeSanchez.POS
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+            {
+                options.LoginPath = "/";
+                
+            });
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
@@ -24,6 +31,7 @@ namespace CafeSanchez.POS
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
