@@ -10,11 +10,9 @@
   <ItemGroup>
     <None Remove="scripts\1-create-database.sql" />
     <None Remove="scripts\2-insert-master-data.sql" />
-    <None Remove="scripts\3-add-rowversion.sql" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="scripts\3-add-rowversion.sql" />
     <EmbeddedResource Include="scripts\1-create-database.sql" />
     <EmbeddedResource Include="scripts\2-insert-master-data.sql" />
   </ItemGroup>
