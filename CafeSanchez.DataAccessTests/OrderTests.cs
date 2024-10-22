@@ -18,7 +18,7 @@ public class OrderTests
     [Test]
     public void InstantiateOrderTest()
     {
-        Order test = new Order() { CustomerName = "Hans", Date = DateTime.Now, Discount = 10 };
+        Order test = new() { CustomerName = "Hans", Date = DateTime.Now, Discount = 10, Status = "New" };
 
         Assert.That(test, Is.Not.Null);
     }
@@ -26,16 +26,44 @@ public class OrderTests
     [Test]
     public void CreateOrderTest()
     {
-        Product product = new Product() { Id = 1, Name = "Ligegyldigt", Description = "Underordnet" };
+        Product product = new() { Id = 1, Name = "Ligegyldigt", Description = "Underordnet" };
 
         List<Orderline> orderlines = [new Orderline() { Product = product, Quantity = 2 }];
 
-        Order order = new Order() { CustomerName = "Hans", Date = DateTime.Now, Discount = 10, Orderlines = orderlines };
+        Order order = new() { CustomerName = "Hans", Date = DateTime.Now, Discount = 10, Status = "New", Orderlines = orderlines };
 
         var test = _orderDao.Create(order);
 
         Assert.That(test, Is.Not.Null);
         Assert.That(test, Is.InstanceOf<Order>());
-        Assert.That(test.Id, Is.GreaterThan(0));
+        Assert.Multiple(() =>
+        {
+            Assert.That(test.Id, Is.GreaterThan(0));
+            Assert.That(test.WebId, Is.Not.Empty);
+            Assert.That(test.Status, Is.EqualTo("New"));
+            Assert.That(test.Orderlines, Has.Count.EqualTo(1));
+        });
+    }
+
+    [Test]
+    public void ReadOrdersSuccessfullyTest()
+    {
+        var test = _orderDao.Read();
+
+        Assert.That(test, Is.Not.Null);
+        foreach (Order order in test)
+        {
+            Assert.That(order.Orderlines, Is.Not.Null);
+            Assert.That(order.Orderlines, Is.Not.Empty);
+        }
+    }
+
+    [Test]
+    public void UpdateOrderStatusSuccessfullyTest()
+    {
+        var test = _orderDao.Read().First();
+        test.Status = "Finished";
+        test = _orderDao.Update(test);
+        Assert.That(test.Status, Is.EqualTo("Finished"));
     }
 }

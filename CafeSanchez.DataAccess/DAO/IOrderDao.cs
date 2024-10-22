@@ -9,5 +9,6 @@ namespace CafeSanchez.DataAccess.DAO
 {
     public interface IOrderDao : IDao<Order>
     {
+        Order FindById(int id);
     }
 }

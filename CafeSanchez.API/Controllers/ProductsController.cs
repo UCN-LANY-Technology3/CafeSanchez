@@ -22,6 +22,7 @@ namespace CafeSanchez.API.Controllers
                 yield return new ProductDto
                 {
                     Id = entity.Id,
+                    WebId = entity.WebId,
                     Name = entity.Name,
                     Description = entity.Description,
                     Price = entity.Price

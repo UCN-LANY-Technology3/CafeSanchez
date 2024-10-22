@@ -15,4 +15,5 @@ public class Order
     public decimal Discount { get; set; }
     public IList<Orderline> Orderlines { get; set; } = [];
     public byte[] Version { get; } = new byte[8];
+    public required string Status { get; set; }
 }
