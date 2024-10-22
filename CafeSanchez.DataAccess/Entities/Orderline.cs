@@ -9,6 +9,5 @@ namespace CafeSanchez.DataAccess.Entities;
 public class Orderline
 {
     public int Quantity { get; set; }
-
     public required Product Product{ get; set; }
 }

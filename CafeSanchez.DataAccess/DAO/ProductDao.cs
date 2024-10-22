@@ -20,7 +20,7 @@ internal class ProductDao(string connectionString) : IProductDao
 
     public IEnumerable<Product> Read()
     {
-        string selectSql = "SELECT Id, Name, Description, Price FROM Products";
+        string selectSql = "SELECT Id, WebId, Name, Description, Price FROM Products";
 
         IDbConnection connection = new SqlConnection(_connectionString);
 
