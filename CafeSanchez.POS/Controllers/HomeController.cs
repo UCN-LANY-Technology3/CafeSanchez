@@ -1,5 +1,6 @@
 using CafeSanchez.POS.Models;
 using CafeSanchez.POS.Services.Auth;
+using CafeSanchez.POS.Services.OrderManagement;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -12,9 +13,9 @@ namespace CafeSanchez.POS.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly UserService _userService;
+        private readonly LoginService _userService;
 
-        public HomeController(ILogger<HomeController> logger, UserService userService)
+        public HomeController(ILogger<HomeController> logger, LoginService userService)
         {
             _logger = logger;
             _userService = userService;
@@ -29,9 +30,10 @@ namespace CafeSanchez.POS.Controllers
         public async Task<IActionResult> Login(LoginModel login)
         {
             // Validate login and create authorization cookie
-            if (_userService.ValidateLogin(login.Username, login.Password, out User? user)) 
+            if (_userService.Validate(login.Username, login.Password, out User? user))
             {
-                if (user == null) {
+                if (user == null)
+                {
                     return RedirectToAction("Index");
                 }
                 var claims = new List<Claim>
@@ -39,6 +41,7 @@ namespace CafeSanchez.POS.Controllers
                     new(ClaimTypes.Name, login.Username),
                     new("Fullname", user.Fullname),
                     new(ClaimTypes.Email, user.Email),
+                    new(ClaimTypes.Role, "Cashier")
                 };
 
                 var claimsIdentity = new ClaimsIdentity(
@@ -48,7 +51,8 @@ namespace CafeSanchez.POS.Controllers
                     CookieAuthenticationDefaults.AuthenticationScheme,
                     new ClaimsPrincipal(claimsIdentity));
 
-                return View("Pos", new UserModel { Fullname = user.Fullname, Email = user.Email });
+                
+                return RedirectToAction("Index", "Pos");
             }
 
             return RedirectToAction("Index");
@@ -62,11 +66,6 @@ namespace CafeSanchez.POS.Controllers
             return RedirectToAction("Index");
         }
 
-        [Authorize]
-        public IActionResult Pos()
-        {
-            return View();
-        }
 
         public IActionResult Privacy()
         {

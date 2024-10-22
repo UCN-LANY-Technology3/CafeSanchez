@@ -1,0 +1,58 @@
+﻿@model PosModel
+@{
+    ViewData["Title"] = "Cafe Sanchéz - POS";
+
+    SelectList products = new(Model.AvailableProducts, nameof(ProductModel.Id), nameof(ProductModel.Name));
+}
+
+
+<h1>Cafe Sanchéz</h1>
+<hr />
+<form class="mb-4" method="post" asp-controller="home" asp-action="logout">
+    <button class="btn btn-primary" type="submit">Sign out @Model.CashierName</button>
+</form>
+<div class="row">
+    <div class="col">
+        <h2>Current Orders</h2>
+        <hr />
+        <div id="currentOrdersView">
+        </div>
+    </div>
+    <div class="col">
+        <h2>Sale</h2>
+        <hr />
+        <form id="salesView" method="post" asp-controller="pos" asp-action="createorder">
+            <div class="mb-3">
+                <label for="customerNameInput" class="form-label">Customer name</label>
+                <input type="text" class="form-control" id="customerNameInput" name="customerName" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">On order</label>
+                <select id="onOrderSelect" size="5" class="form-select"></select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Select product</label>
+                <div class="row">
+                    <div class="col-8">
+                        <select id="productSelect" class="form-select" asp-items="products"></select>
+                    </div>
+                    <div class="col">
+                        <input id="quantityInput" class="form-control" type="number" />
+                    </div>
+                    <div class="col d-grid">
+                        <button class="btn btn-primary" type="button">Add</button>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="discountInput" class="form-label">% Discount</label>
+                <input id="discountInput" class="form-control" type="number" name="discount" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Total price:</label>
+            </div>
+            <button class="btn btn-primary" type="submit">Create order</button>
+        </form>
+    </div>
+</div>
+

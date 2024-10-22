@@ -1,4 +1,5 @@
 using CafeSanchez.POS.Services.Auth;
+using CafeSanchez.POS.Services.OrderManagement;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace CafeSanchez.POS
@@ -16,7 +17,8 @@ namespace CafeSanchez.POS
             {
                 options.LoginPath = "/";         
             });
-            builder.Services.AddScoped<UserService>(_ => new UserService(userDataConnectionString));
+            builder.Services.AddScoped(_ => new LoginService(userDataConnectionString));
+            builder.Services.AddScoped(_ => new OrderManagementService(builder.Configuration));
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();

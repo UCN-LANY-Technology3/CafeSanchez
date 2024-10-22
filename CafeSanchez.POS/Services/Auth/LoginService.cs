@@ -4,11 +4,11 @@ using System.Data.SqlClient;
 
 namespace CafeSanchez.POS.Services.Auth
 {
-    public class UserService(string connectionString)
+    public class LoginService(string connectionString)
     {
         private readonly string _connectionString = connectionString;
 
-        public bool ValidateLogin(string username, string password, out User? user)
+        public bool Validate(string username, string password, out User? user)
         {
             IDbConnection conn = new SqlConnection(_connectionString);
 
