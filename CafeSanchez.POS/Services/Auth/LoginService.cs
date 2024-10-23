@@ -10,10 +10,20 @@ namespace CafeSanchez.POS.Services.Auth
     {
         private readonly string _connectionString = connectionString;
 
+        public bool CreateUser(User user)
+        {
+            // TODO: Implement this...
+            throw new NotImplementedException();
+        }
+
+        public bool ChangePassword(string username, string password)
+        {
+            // TODO: Implement this
+            throw new NotImplementedException();
+        }
+
         public bool Validate(string username, string password, out User? user)
         {
-            byte[] salt = RandomNumberGenerator.GetBytes(128 / 8);
-
             // Get user
             IDbConnection connection = new SqlConnection(_connectionString);
             string selectUserSql = "SELECT * FROM Users WHERE Username = @username";
