@@ -10,5 +10,7 @@ namespace CafeSanchez.DataAccess.DAO
     public interface IProductDao : IDao<Product>
     {
         Product FindByName(string name);
+
+        IEnumerable<Product> FindByWebIds(params Guid[] ids);
     }
 }

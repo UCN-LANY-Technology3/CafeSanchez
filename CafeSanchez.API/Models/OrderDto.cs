@@ -9,7 +9,7 @@ namespace CafeSanchez.API.Models
         public required string CustomerName { get; set; }
         public required int Discount { get; set; }
         public required string Status { get; set; }
-        public Orderline[] Orderlines { get; set; } = [];
+        public OrderlineDto[] Orderlines { get; set; } = [];
         public byte[] Version { get; set; } = new byte[8];
     }
 }

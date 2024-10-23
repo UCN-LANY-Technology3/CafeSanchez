@@ -9,3 +9,18 @@ Accept: application/json
 GET {{CafeSanchez.API_HostAddress}}/orders
 Client-Authorization-Key: {{Client_Authorization_Key}}
 Accept: application/json
+
+###
+POST {{CafeSanchez.API_HostAddress}}/orders
+Client-Authorization-Key: {{Client_Authorization_Key}}
+Accept: application/json
+Content-Type: application/json
+
+{
+  "customerName": "TestCustomer",
+  "discount": 0, 
+  "items": [
+    { "id": "6d5f461d-45dc-495b-9ace-c7d16c6f5621", "quantity": 2 }, 
+    { "id": "929e4c46-b7f6-4782-ba09-424a1df5d581", "quantity": 1}
+  ]
+}

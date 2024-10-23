@@ -2,7 +2,14 @@
 {
     public class CreateOrder
     {
-        public Guid OrderId { get; set; }
-        public required string NewStatus { get; set; }
+        public required string CustomerName { get; set; }
+        public int Discount { get; set; }
+        public CreateOrderline[] Items { get; set; } = [];
+    }
+
+    public class CreateOrderline
+    {
+        public Guid Id { get; set; }
+        public int Quantity { get; set; }
     }
 }

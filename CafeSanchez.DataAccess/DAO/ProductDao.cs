@@ -45,4 +45,10 @@ internal class ProductDao(string connectionString) : IProductDao
 
         return connection.QuerySingle<Product>(selectSql, new { Name = name });
     }
+
+    public IEnumerable<Product> FindByWebIds(params Guid[] ids)
+    {
+        // TODO: implement this next
+        throw new NotImplementedException();
+    }
 }
