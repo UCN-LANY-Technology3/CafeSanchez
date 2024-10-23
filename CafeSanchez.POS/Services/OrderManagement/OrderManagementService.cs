@@ -34,7 +34,23 @@ namespace CafeSanchez.POS.Services.OrderManagement
         // Gets list of active orders from api
         public IEnumerable<OrderModel> GetActiveOrdersList()
         {
-            throw new NotImplementedException();
+            RestClientOptions options = new()
+            {
+                BaseUrl = new Uri(_baseUrl)
+            };
+
+            RestClient client = new(options);
+
+            RestRequest request = new()
+            {
+                Method = Method.Get,
+                Resource = "orders"
+            };
+            request.AddHeader("Client-Authorization-Key", _apiKey);
+
+            var response = client.Get<OrderModel[]>(request);
+
+            return [.. response];
         }
 
         public bool CreateOrder(NewOrderModel order)

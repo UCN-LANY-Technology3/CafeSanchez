@@ -1,6 +1,8 @@
 ﻿using Dapper;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System.Data;
 using System.Data.SqlClient;
+using System.Security.Cryptography;
 
 namespace CafeSanchez.POS.Services.Auth
 {
@@ -10,11 +12,28 @@ namespace CafeSanchez.POS.Services.Auth
 
         public bool Validate(string username, string password, out User? user)
         {
-            IDbConnection conn = new SqlConnection(_connectionString);
+            byte[] salt = RandomNumberGenerator.GetBytes(128 / 8);
 
-            user = conn.QuerySingleOrDefault<User>("SELECT Fullname, Email FROM Users WHERE Username = @username AND Password = @password", new { username, password });
+            // Get user
+            IDbConnection connection = new SqlConnection(_connectionString);
+            string selectUserSql = "SELECT * FROM Users WHERE Username = @username";
+            user = connection.QuerySingleOrDefault<User>(selectUserSql, new { Username = username });
 
-            return user != null;
+            if (user == null)
+            {
+                return false;
+            }
+
+            // Validate passwordhash
+            string hashedPassword = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                password,
+                Convert.FromBase64String(user.Salt),
+                KeyDerivationPrf.HMACSHA256,
+                100000,
+                32));
+
+            // Return if user was validated
+            return user.PasswordHash == hashedPassword;
         }
     }
 }

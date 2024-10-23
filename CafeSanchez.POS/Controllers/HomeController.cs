@@ -8,74 +8,67 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Security.Claims;
 
-namespace CafeSanchez.POS.Controllers
+namespace CafeSanchez.POS.Controllers;
+
+public class HomeController(ILogger<HomeController> logger, LoginService userService) : Controller
 {
-    public class HomeController : Controller
+    private readonly ILogger<HomeController> _logger = logger;
+    private readonly LoginService _userService = userService;
+
+    public IActionResult Index()
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly LoginService _userService;
+        return View();
+    }
 
-        public HomeController(ILogger<HomeController> logger, LoginService userService)
+    [HttpPost("/Login")]
+    public async Task<IActionResult> Login(LoginModel login)
+    {
+        // Validate login and create authorization cookie
+        if (_userService.Validate(login.Username, login.Password, out User? user))
         {
-            _logger = logger;
-            _userService = userService;
-        }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        [HttpPost("/")]
-        public async Task<IActionResult> Login(LoginModel login)
-        {
-            // Validate login and create authorization cookie
-            if (_userService.Validate(login.Username, login.Password, out User? user))
+            if (user == null)
             {
-                if (user == null)
-                {
-                    return RedirectToAction("Index");
-                }
-                var claims = new List<Claim>
-                {
-                    new(ClaimTypes.Name, login.Username),
-                    new("Fullname", user.Fullname),
-                    new(ClaimTypes.Email, user.Email),
-                    new(ClaimTypes.Role, "Cashier")
-                };
-
-                var claimsIdentity = new ClaimsIdentity(
-                    claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-                await HttpContext.SignInAsync(
-                    CookieAuthenticationDefaults.AuthenticationScheme,
-                    new ClaimsPrincipal(claimsIdentity));
-
-                
-                return RedirectToAction("Index", "Pos");
+                return RedirectToAction("Index");
             }
+            var claims = new List<Claim>
+            {
+                new(ClaimTypes.Name, login.Username),
+                new("Fullname", user.Fullname),
+                new(ClaimTypes.Email, user.Email),
+                new(ClaimTypes.Role, "Cashier")
+            };
 
-            return RedirectToAction("Index");
+            var claimsIdentity = new ClaimsIdentity(
+                claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(claimsIdentity));
+
+            
+            return RedirectToAction("Index", "Pos");
         }
 
-        [HttpPost("/Logout")]
-        public async Task<IActionResult> Logout()
-        {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        return RedirectToAction("Index");
+    }
 
-            return RedirectToAction("Index");
-        }
+    [HttpPost("/Logout")]
+    public async Task<IActionResult> Logout()
+    {
+        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+        return RedirectToAction("Index");
+    }
 
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+    public IActionResult Privacy()
+    {
+        return View();
+    }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
+    {
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }
