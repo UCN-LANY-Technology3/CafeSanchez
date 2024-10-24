@@ -36,7 +36,7 @@ namespace CafeSanchez.POS.Services.Auth
             }
 
             // Validate passwordhash
-            string hashedPassword = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+            string passwordHash = Convert.ToBase64String(KeyDerivation.Pbkdf2(
                 password,
                 Convert.FromBase64String(user.Salt),
                 KeyDerivationPrf.HMACSHA256,
@@ -44,7 +44,7 @@ namespace CafeSanchez.POS.Services.Auth
                 32));
 
             // Return if user was validated
-            return user.PasswordHash == hashedPassword;
+            return user.PasswordHash == passwordHash;
         }
     }
 }
