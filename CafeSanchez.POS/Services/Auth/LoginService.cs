@@ -22,6 +22,7 @@ namespace CafeSanchez.POS.Services.Auth
             throw new NotImplementedException();
         }
 
+        // Source: https://learn.microsoft.com/en-us/aspnet/core/security/data-protection/consumer-apis/password-hashing?view=aspnetcore-8.0
         public bool Validate(string username, string password, out User? user)
         {
             // Get user
