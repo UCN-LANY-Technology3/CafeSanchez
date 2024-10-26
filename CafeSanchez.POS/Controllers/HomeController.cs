@@ -52,7 +52,7 @@ public class HomeController(ILogger<HomeController> logger, LoginService userSer
         return RedirectToAction("Index");
     }
 
-    [HttpPost("/Logout")]
+    [Authorize, HttpPost("/Logout")]
     public async Task<IActionResult> Logout()
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
@@ -60,10 +60,41 @@ public class HomeController(ILogger<HomeController> logger, LoginService userSer
         return RedirectToAction("Index");
     }
 
-
-    public IActionResult Privacy()
+    [Authorize, HttpGet("/CreateUser")]
+    public IActionResult CreateUser()
     {
-        return View();
+        ViewBag.CreateNew = true;
+        return View("AdminUser");
+    }
+
+    [Authorize, HttpPost("/CreateUser")]
+    public async Task<IActionResult> CreateUser(CreateUserModel model)
+    {
+        _userService.CreateUser(model.Username, model.Password, model.Fullname, model.Email);
+        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+        return RedirectToAction("Index");
+    }
+
+    [Authorize, HttpGet("/ChangePassword")]
+    public IActionResult ChangePassword()
+    {
+        ViewBag.CreateNew = false;
+        return View("AdminUser");
+    }
+
+    [Authorize, HttpPost("/ChangePassword")]
+    public async Task<IActionResult> ChangePassword(ChangePasswordModel model)
+    {
+        string username = HttpContext.User.Claims.Single(c => c.Type == ClaimTypes.Name).Value;
+
+        if (_userService.Validate(username, model.OldPassword, out User? user))
+        {
+            _userService.ChangePassword(username, model.NewPassword);
+        }
+        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+        return RedirectToAction("Index");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

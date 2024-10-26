@@ -8,9 +8,10 @@
 
 <h1>Cafe Sanchéz</h1>
 <hr />
-<form class="mb-4" method="post" asp-controller="home" asp-action="logout">
-    <button class="btn btn-primary" type="submit">Sign out @Model.CashierName</button>
-</form>
+
+<button class="btn btn-primary" type="button" onclick="signOut()" >Sign out @Model.CashierName</button>
+<button class="btn btn-primary" type="button" onclick="changePassword()">Change Password</button>
+
 <div class="row">
     <div class="col">
         <h2>Current Orders</h2>
@@ -56,3 +57,22 @@
     </div>
 </div>
 
+@section Scripts{
+    <script type="text/javascript">
+
+        function signOut(){
+            $.ajax({
+                type: "POST",
+                url: "/logout",
+                success: function() {
+                    location.reload();
+                }
+            });
+        };
+
+        function changePassword() {
+            window.location = "/changepassword";
+        };
+
+    </script>
+}

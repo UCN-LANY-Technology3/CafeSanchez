@@ -1,11 +1,10 @@
-﻿namespace CafeSanchez.POS.Services.Auth
+﻿namespace CafeSanchez.POS.Models
 {
-    public class User
+    public class CreateUserModel
     {
         public required string Username { get; set; }
         public required string Fullname { get; set; }
         public required string Email { get; set; }
-        public required string Salt { get; set; }
-        public required string PasswordHash { get; set; }
+        public required string Password { get; set; }
     }
 }
